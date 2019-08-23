@@ -47,7 +47,7 @@ class MainHandler(BaseHandler):
         #self.write("Hello, world")
         #self.redirect("/static/adminlte/starter.html")
         Free, Used, Ration =  vfs.GetUsage()
-        self.render(template_name = "index.html", free=Free, used=Used)
+        self.render(template_name = "index.html", user=name, free=Free, used=Used)
         """
         self.render(
             template_name = "index.html",

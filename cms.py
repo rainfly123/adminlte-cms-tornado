@@ -7,7 +7,7 @@ import tornado.options
 import tornado.web
 import time
 import mysql
-import vfs
+import utils 
 
 from tornado.options import define, options
 define("port", default=9180, help="run on the given port", type=int)
@@ -46,7 +46,7 @@ class MainHandler(BaseHandler):
         name = tornado.escape.xhtml_escape(self.current_user)
         #self.write("Hello, world")
         #self.redirect("/static/adminlte/starter.html")
-        Free, Used, Ration =  vfs.GetUsage()
+        Free, Used, Ration =  utils.GetUsage()
         self.render(template_name = "index.html", user=name, free=Free, used=Used)
         """
         self.render(

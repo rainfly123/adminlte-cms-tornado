@@ -13,8 +13,8 @@ import uuid
 from tornado.options import define, options
 define("port", default=9180, help="run on the given port", type=int)
 
-DNS="http://127.0.0.1:9180/"
-PATH="/home/rain/temp/"
+DNS="http://127.0.0.1:8080/"
+PATH="/home/rain/openresty/nginx/html/"
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -34,6 +34,7 @@ class minputHandler(BaseHandler):
         course_description = self.get_argument("course_description")
         course_count = self.get_argument("course_count")
         free = self.get_argument("free")
+        course_type = self.get_argument("course_type")
 
         files = self.request.files
         mylogo = str(uuid.uuid1())
@@ -46,6 +47,7 @@ class minputHandler(BaseHandler):
             with open(os.path.join(PATH, mylogo), 'wb') as f:
                 f.write(img_file)
 
+        """
         mymp3 = str(uuid.uuid1())
         mp3_files = files.get("mp3")
         #print(mp3_files,'=========================================')
@@ -55,6 +57,24 @@ class minputHandler(BaseHandler):
             mymp3 += ext
             with open(os.path.join(PATH, mymp3), 'wb') as f:
                 f.write(mp3_file)
+        """
+        image_url = os.path.join(DNS, mylogo)
+        if free == 'on':
+            course_free = 1
+        else:
+            course_free = 0
+        mysql.InsertCourse(course_name,
+                          publisher, 
+			  course_author,
+			  course_category, 
+			  course_abstract,
+			  course_description, 
+			  course_free, 
+                          image_url,
+			  course_count, 
+                          course_type)
+
+        self.redirect('/mdata')
 
 
 class MdataHandler(BaseHandler):

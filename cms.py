@@ -25,7 +25,7 @@ class MdataHandler(BaseHandler):
         columns_name, data = mysql.Get("sh_course")
         names = ["ID","课程名称", "出版社", "作者","分类","简介","描述","创建时间","免费","图标","总节数","类型"]
  
-        self.render(template_name = "mdata.html", columns = names, rows = data)
+        self.render(template_name = "mdata.html", user=name, columns = names, rows = data)
 
 class NdataHandler(BaseHandler):
     @tornado.web.authenticated
@@ -37,7 +37,7 @@ class NdataHandler(BaseHandler):
         names = ["课件ID","课程ID", "时长", "大小","名称","格式","次序","文字版","类型","MD5","创建时间","URL",
                 "描述","图标","参数","上传者"]
  
-        self.render(template_name = "ndata.html", columns = names, rows = data)
+        self.render(template_name = "ndata.html", user=name, columns = names, rows = data)
  
 
 class MainHandler(BaseHandler):

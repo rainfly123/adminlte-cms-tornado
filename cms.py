@@ -8,12 +8,13 @@ import tornado.web
 import time
 import mysql
 import utils 
+import uuid
 
 from tornado.options import define, options
 define("port", default=9180, help="run on the given port", type=int)
 
 DNS="http://127.0.0.1:9180/"
-PATH="/data/audio/"
+PATH="/home/rain/temp/"
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -24,6 +25,35 @@ class minputHandler(BaseHandler):
     def get(self):
         name = tornado.escape.xhtml_escape(self.current_user)
         self.render(template_name = "minput.html", user=name)
+    def post(self):
+        course_name = self.get_argument("course_name")
+        publisher = self.get_argument("publisher")
+        course_author = self.get_argument("course_author")
+        course_category = self.get_argument("course_category")
+        course_abstract = self.get_argument("course_abstract")
+        course_description = self.get_argument("course_description")
+        course_count = self.get_argument("course_count")
+        free = self.get_argument("free")
+        print type(free), publisher
+        files = self.request.files
+        print files
+
+        mylogo = str(uuid.uuid1())
+        img_files = files.get("logo")
+        print(img_files,'=========================================')
+        if img_files:
+            img_file = img_files[0]["body"] 
+            with open(os.join(PATH, mylogo)) as f:
+                f.write(img_file)
+
+        mymp3 = str(uuid.uuid1())
+        mp3_files = files.get("mp3")
+        print(mp3_files,'=========================================')
+        if mp3_files:
+            mp3_file = mp3_files[0]["body"] 
+            with open(os.join(PATH, mymp3)) as f:
+                f.write(mp3_file)
+
 
 class MdataHandler(BaseHandler):
     @tornado.web.authenticated

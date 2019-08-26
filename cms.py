@@ -34,24 +34,26 @@ class minputHandler(BaseHandler):
         course_description = self.get_argument("course_description")
         course_count = self.get_argument("course_count")
         free = self.get_argument("free")
-        print type(free), publisher
-        files = self.request.files
-        print files
 
+        files = self.request.files
         mylogo = str(uuid.uuid1())
         img_files = files.get("logo")
-        print(img_files,'=========================================')
+        #print(img_files,'=========================================')
         if img_files:
             img_file = img_files[0]["body"] 
-            with open(os.join(PATH, mylogo)) as f:
+            ext = os.path.splitext(img_files[0]['filename'])[1]
+            mylogo += ext
+            with open(os.path.join(PATH, mylogo), 'wb') as f:
                 f.write(img_file)
 
         mymp3 = str(uuid.uuid1())
         mp3_files = files.get("mp3")
-        print(mp3_files,'=========================================')
+        #print(mp3_files,'=========================================')
         if mp3_files:
             mp3_file = mp3_files[0]["body"] 
-            with open(os.join(PATH, mymp3)) as f:
+            ext = os.path.splitext(mp3_files[0]['filename'])[1]
+            mymp3 += ext
+            with open(os.path.join(PATH, mymp3), 'wb') as f:
                 f.write(mp3_file)
 
 

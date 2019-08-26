@@ -20,6 +20,48 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("user")
 
+class ninputHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        name = tornado.escape.xhtml_escape(self.current_user)
+        self.render(template_name = "minput.html", user=name)
+    def post(self):
+        course_name = self.get_argument("course_name")
+        publisher = self.get_argument("publisher")
+        course_author = self.get_argument("course_author")
+        course_category = self.get_argument("course_category")
+        course_abstract = self.get_argument("course_abstract")
+        course_description = self.get_argument("course_description")
+        course_count = self.get_argument("course_count")
+        free = self.get_argument("free")
+        course_type = self.get_argument("course_type")
+
+        files = self.request.files
+        mylogo = str(uuid.uuid1())
+        img_files = files.get("logo")
+        #print(img_files,'=========================================')
+        if img_files:
+            img_file = img_files[0]["body"] 
+            ext = os.path.splitext(img_files[0]['filename'])[1]
+            mylogo += ext
+            with open(os.path.join(PATH, mylogo), 'wb') as f:
+                f.write(img_file)
+
+        mymp3 = str(uuid.uuid1())
+        mp3_files = files.get("mp3")
+        #print(mp3_files,'=========================================')
+        if mp3_files:
+            mp3_file = mp3_files[0]["body"] 
+            ext = os.path.splitext(mp3_files[0]['filename'])[1]
+            mymp3 += ext
+            with open(os.path.join(PATH, mymp3), 'wb') as f:
+                f.write(mp3_file)
+
+        image_url = os.path.join(DNS, mylogo)
+        download_url = os.path.join(DNS, mymp3)
+
+        self.redirect('/mdata')
+
 class minputHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -150,6 +192,7 @@ def main():
             (r"/ndata", NdataHandler),
             (r"/login", LoginHandler),
             (r"/minput", minputHandler),
+            (r"/ninput", ninputHandler),
         ],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "static"),

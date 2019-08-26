@@ -87,6 +87,45 @@ def InsertCourse(course_name,
     cursor.close()
     conn.close()
    
+def GetCourseNumber():
+    conn = pymysql.connect(
+    host="localhost",
+    user="root",
+    password= "1",
+    database="smartheadset",
+    charset="utf8")
+ 
+ 
+    cursor = conn.cursor() 
+    sql="select count(course_id) from sh_course"
+ 
+    cursor.execute(sql)
+    results = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+    return results[0]
+
+def GetResourceNumber():
+    conn = pymysql.connect(
+    host="localhost",
+    user="root",
+    password= "1",
+    database="smartheadset",
+    charset="utf8")
+ 
+ 
+    cursor = conn.cursor() 
+    sql="select count(resource_file_id) from sh_resource_file"
+ 
+    cursor.execute(sql)
+    results = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+    return results[0]
+
+
 
 
 if __name__ == "__main__":
@@ -95,3 +134,5 @@ if __name__ == "__main__":
 
     ncolumns , results = Get("sh_resource_file")
     print ncolumns, results
+    print GetCourseNumber()
+    print GetResourceNumber()

@@ -162,7 +162,9 @@ class MainHandler(BaseHandler):
         #self.write("Hello, world")
         #self.redirect("/static/adminlte/starter.html")
         Free, Used, Ration =  utils.GetUsage()
-        self.render(template_name = "index.html", user=name, free=Free, used=Used)
+        course = mysql.GetCourseNumber()
+        resource  = mysql.GetResourceNumber()
+        self.render(template_name = "index.html", user=name, free=Free, used=Used, courses=course, resources=resource)
         """
         self.render(
             template_name = "index.html",

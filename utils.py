@@ -15,11 +15,6 @@ def GetMd5(inputs):
         md5.update(inputs)
         return md5.hexdigest()
 
-def GetMp3Duration(filepath):
-    if filepath is not None:
-        pass
-
-
 def GetUsage():
     df = os.statvfs("/")
     Total = (df.f_bsize * df.f_blocks) / GB

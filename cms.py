@@ -9,6 +9,7 @@ import time
 import mysql
 import utils 
 import uuid
+import datetime
 
 from tornado.options import define, options
 define("port", default=9180, help="run on the given port", type=int)
@@ -24,17 +25,23 @@ class ninputHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         name = tornado.escape.xhtml_escape(self.current_user)
-        self.render(template_name = "minput.html", user=name)
+        self.render(template_name = "ninput.html", user=name)
     def post(self):
-        course_name = self.get_argument("course_name")
-        publisher = self.get_argument("publisher")
-        course_author = self.get_argument("course_author")
-        course_category = self.get_argument("course_category")
-        course_abstract = self.get_argument("course_abstract")
-        course_description = self.get_argument("course_description")
-        course_count = self.get_argument("course_count")
-        free = self.get_argument("free")
-        course_type = self.get_argument("course_type")
+        course_id = self.get_argument("course_id")
+        duration = 0
+        file_size = 0
+        file_name = self.get_argument("file_name")
+        file_format = self.get_argument("file_format")
+        file_order = self.get_argument("file_order")
+        file_text = self.get_argument("file_text")
+        file_type =  1   
+        file_md5 = ""
+        create_time = str(datetime.datetime.now())
+        download_url = ""
+        description = self.get_argument("description")
+        image_url = ""
+        play_param = self.get_argument("play_param")
+        upload_account_id = 1
 
         files = self.request.files
         mylogo = str(uuid.uuid1())
@@ -56,11 +63,16 @@ class ninputHandler(BaseHandler):
             mymp3 += ext
             with open(os.path.join(PATH, mymp3), 'wb') as f:
                 f.write(mp3_file)
-
+            file_md5 = utils.GetMd5(mp3_file)
+            duration = utils.GetDuration(os.path.join(PATH, mymp3))
+            file_size = len(mp3_file)
         image_url = os.path.join(DNS, mylogo)
         download_url = os.path.join(DNS, mymp3)
 
-        self.redirect('/mdata')
+        mysql.InsertResource(course_id, duration, file_size, file_name, file_format, file_order,
+                            file_text, file_type, file_md5, create_time, download_url, description,
+                            image_url, play_param, upload_account_id)
+        self.redirect('/ndata')
 
 class minputHandler(BaseHandler):
     @tornado.web.authenticated

@@ -25,6 +25,32 @@ def Get(table_name):
     conn.close()
     return nresults, results
 
+def InsertResource(course_id, duration, file_size, file_name, file_format, file_order,
+                            file_text, file_type, file_md5, create_time, download_url, description,
+                            image_url, play_param, upload_account_id):
+    conn = pymysql.connect(
+    host="localhost",
+    user="root",
+    password= "1",
+    database="smartheadset",
+    charset="utf8")
+ 
+    cursor = conn.cursor() 
+    sql = 'insert into sh_resource_file (course_id, duration, file_size, file_name, file_format, file_order,\
+          file_text, file_type, file_md5, create_time, download_url, description, image_url, play_param, \
+          upload_account_id) values \
+          (%s,%s,%s,"%s","%s",%s,"%s",%s,"%s","%s","%s", "%s", "%s", "%s", %s)' %(course_id,
+          duration, file_size, file_name, file_format, file_order,
+                            file_text, file_type, file_md5, create_time, download_url, description,
+                            image_url, play_param, upload_account_id)
+
+    print sql
+    cursor.execute(sql)
+    conn.commit()
+    cursor.close()
+    conn.close()
+   
+
 def InsertCourse(course_name,
         publisher, 
         course_author,

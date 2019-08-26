@@ -12,9 +12,18 @@ import utils
 from tornado.options import define, options
 define("port", default=9180, help="run on the given port", type=int)
 
+DNS="http://127.0.0.1:9180/"
+PATH="/data/audio/"
+
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         return self.get_secure_cookie("user")
+
+class minputHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        name = tornado.escape.xhtml_escape(self.current_user)
+        self.render(template_name = "minput.html", user=name)
 
 class MdataHandler(BaseHandler):
     @tornado.web.authenticated
@@ -88,6 +97,7 @@ def main():
             (r"/mdata", MdataHandler),
             (r"/ndata", NdataHandler),
             (r"/login", LoginHandler),
+            (r"/minput", minputHandler),
         ],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "static"),

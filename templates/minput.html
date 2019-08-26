@@ -171,7 +171,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-    <a href="/minput">  <button type="button" class="btn btn-danger"> 添加课程 </button> </a>   
+        添加课程
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i>首页</a></li>
@@ -181,43 +181,80 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">课程列表</h3>
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">课程信息</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                {% for column in columns %}
-                 <th>{{column}}</th>
-                {% end %}
-                </tr>
-                </thead>
-                <tbody>
-                {% for row in rows %}
-                 <tr>
-                  {% for field in row %}
-                    <td>{{field}}</td>
-                  {% end %}
-                 </tr>
-                {% end %}
-                </tr>
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-            </div>
-            <!-- /.box-body -->
+            <!-- form start -->
+            <form role="form">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="course_name">课程名称</label>
+                  <input type="text" class="form-control" id="course_name" placeholder="课程名称">
+                </div>
+                <div class="form-group">
+                  <label for="publisher">出版社</label>
+                  <input type="text" class="form-control" id="publisher" placeholder="出版社">
+                </div>
+                <div class="form-group">
+                  <label for="course_author">作者</label>
+                  <input type="text" class="form-control" id="course_author" placeholder="作者">
+                </div>
+                <div class="form-group">
+                  <label for="course_category">分类</label>
+                  <input type="text" class="form-control" id="course_category" placeholder="分类">
+                </div>
+
+                <div class="form-group">
+                  <label>简介</label>
+                  <textarea class="form-control" rows="3" id="course_abstract" placeholder="简介"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label>描述</label>
+                  <textarea class="form-control" rows="3" id="course_description" placeholder="描述"></textarea>
+                </div>
+                <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="free">
+                      是否免费
+                    </label>
+                 </div>
+              <div class="form-group">
+                    <label>总节数   </label>
+                      <input type="text" class="form-control"  name="course_count" placeholder="总章节数量">
+              </div>
+
+
+
+                <div class="form-group">
+                  <label for="exampleInputFile">图标</label>
+                  <input type="file" id="logo">
+                </div>
+
+                <div class="form-group">
+                  <label for="exampleInputFile">音频文件</label>
+                  <input type="file" id="mp3">
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
           </div>
           <!-- /.box -->
+        <div class="col-md-2">
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
+          </div>
+          <!-- /.roww -->
     </section>
     <!-- /.content -->
   </div>

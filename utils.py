@@ -4,7 +4,7 @@
 import hashlib
 import os
 import statvfs
-#import librosa
+from mutagen import mp3
 
 
 GB = 1024 * 1024 * 1024
@@ -27,6 +27,11 @@ def GetUsage():
     Avaiable = round(float(Free) / Total, 2)
     return Free, Total - Free, int((1 - Avaiable)*100)
 
+def GetDuration(filepath):
+    if filepath is not None:
+        audio = mp3.Open(filepath)
+        return int(audio.info.length)
+        
 
 if __name__ == '__main__':
     import sys
@@ -39,7 +44,9 @@ if __name__ == '__main__':
         data = fs.read()
         print GetMd5(data)
 
-    print GetMd5(None)
+    print GetDuration(sys.argv[1])
 
     a,b,c = GetUsage()
     print a,b,c
+
+    

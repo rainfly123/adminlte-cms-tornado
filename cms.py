@@ -190,7 +190,7 @@ class LoginHandler(BaseHandler):
     def post(self):
         name = self.get_argument("name")
         password = self.get_argument("password")
-        if name == "admin" and password == "xiechc":
+        if name == "admin" and password == "123456":
             self.set_secure_cookie("user", name)
             self.redirect("/")
         else:

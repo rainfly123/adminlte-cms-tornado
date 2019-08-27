@@ -7,6 +7,7 @@ import mysql
 import qiniusdk
 import datetime
 import utils
+import re
 
 
 
@@ -41,11 +42,12 @@ def Resourse(filename):
         csheet = book.sheet_by_name(sheet)
         course_id = mysql.getCourseID(sheet)
         for x in [i + 1 for i in xrange(csheet.nrows - 1)]:
-             index = csheet.cell_value(x,0)
              file_name = csheet.cell_value(x,1)
              description = csheet.cell_value(x,2)
+             if len(description) > 0:
+                 description = re.escape(description)
              mp3filename = csheet.cell_value(x,3)
-             file_order = index
+             file_order = x 
              file_format = "mp3"
              play_param = ""
              upload_account_id = 1
@@ -61,12 +63,12 @@ def Resourse(filename):
                  file_md5 = utils.GetMd5(file_path)
                  file_size = utils.GetSize(file_path)
                  #check picture, then upload to qiniu
-                 pic_path = checkPicName(sheet, mp3filename, index)
+                 pic_path = checkPicName(sheet, mp3filename, x)
                  image_url = qiniusdk.upload(pic_path)
                  #check mp3, then upload to qiniu
                  download_url = qiniusdk.upload(file_path)
              else:
-                print u"==============没有资源文件==%s==%s=%d====="%(sheet, file_name, index)
+                print u"==============没有资源文件==%s==%s=%d====="%(sheet, file_name, x)
                 continue
 
              mysql.InsertResource(course_id, duration, file_size, file_name, file_format, file_order,

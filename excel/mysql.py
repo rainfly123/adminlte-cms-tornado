@@ -14,15 +14,15 @@ def InsertResource(course_id, duration, file_size, file_name, file_format, file_
     charset="utf8")
  
     cursor = conn.cursor() 
-    sql = 'insert into sh_resource_file (course_id, duration, file_size, file_name, file_format, file_order,\
+    sql = """insert into sh_resource_file (course_id, duration, file_size, file_name, file_format, file_order,\
           file_text, file_type, file_md5, create_time, download_url, description, image_url, play_param, \
           upload_account_id) values \
-          (%s,%s,%s,"%s","%s",%s,"%s",%s,"%s","%s","%s", "%s", "%s", "%s", %s)' %(course_id,
+          (%s,%s,%s,"%s","%s",%s,"%s",%s,"%s","%s","%s", "%s", "%s", "%s", %s)""" %(course_id,
           duration, file_size, file_name, file_format, file_order,
                             file_text, file_type, file_md5, create_time, download_url, description,
                             image_url, play_param, upload_account_id)
 
-    print sql
+   # print sql
     cursor.execute(sql)
     conn.commit()
     cursor.close()

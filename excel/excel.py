@@ -71,6 +71,8 @@ def Resourse(filename):
                 print u"==============没有资源文件==%s==%s=%d====="%(sheet, file_name, x)
                 continue
 
+             if len(file_name) > 0:
+                 file_name = re.escape(file_name)
              mysql.InsertResource(course_id, duration, file_size, file_name, file_format, file_order,
                             file_text, file_type, file_md5, create_time, download_url, description,
                             image_url, play_param, upload_account_id)

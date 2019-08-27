@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#coding:utf-8
 from qiniu import Auth
 from qiniu import put_file, etag
 import qiniu.config
@@ -25,5 +26,5 @@ def upload(localfile):
     return None
 
 if __name__ =='__main__':
-    localfile = './a.mp'
+    localfile = 'upload/英语能力_词汇-新闻热词/资源/新闻热词_Sino-US relations.mp3'
     print upload(localfile)

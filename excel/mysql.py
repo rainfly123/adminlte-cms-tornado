@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+#coding:utf-8
 import pymysql
 import datetime
 
@@ -57,5 +58,23 @@ def InsertCourse(course_name,
     conn.commit()
     cursor.close()
     conn.close()
-   
 
+def getCourseID(course_name):
+
+    conn = pymysql.connect(
+    host="localhost",
+    user="root",
+    password= "1",
+    database="smartheadset",
+    charset="utf8")
+ 
+    cursor = conn.cursor() 
+    sql = 'select course_id from sh_course where course_name= "%s"' %(course_name)
+    print sql
+    cursor.execute(sql)
+    c = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return c[0]
+ 
+   

@@ -189,7 +189,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="display nowrap table table-bordered table-striped">
+              <table id="example2" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                 {% for column in columns %}
@@ -201,7 +201,11 @@
                 {% for row in rows %}
                  <tr>
                   {% for field in row %}
-                    <td>{{field}}</td>
+                    {% if type(field)== unicode and field.startswith("http") %}
+                        <td><a href="{{field}}">查看</a></td>
+                    {% else %}
+                       <td>{{field}}</td>
+                    {% end %}
                   {% end %}
                  </tr>
                 {% end %}
@@ -447,11 +451,11 @@
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': true,
-      'searching'   : true,
+      'searching'   : false,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : true,
-      'scrollY': 200, //表格页面的长度
+      'scrollY': 1080,//是否支持滚动
       'scrollX': true   //是否支持滚动
     })
   })

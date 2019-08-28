@@ -13,10 +13,10 @@ import uuid
 import datetime
 
 from tornado.options import define, options
-define("port", default=9180, help="run on the given port", type=int)
+define("port", default=9181, help="run on the given port", type=int)
 
-DNS="http://10.0.0.121:8080/"
-PATH="/home/rain/openresty/nginx/html/"
+DNS="http://resource.qctchina.top"
+PATH="/data/audio/"
 
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
@@ -193,7 +193,7 @@ class LoginHandler(BaseHandler):
     def post(self):
         name = self.get_argument("name")
         password = self.get_argument("password")
-        if name == "admin" and password == "123456":
+        if name == "admin" and password == "xiechc":
             self.set_secure_cookie("user", name)
             self.redirect("/")
         else:

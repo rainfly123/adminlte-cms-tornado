@@ -6,7 +6,7 @@ def Get(table_name):
     conn = pymysql.connect(
     host="localhost",
     user="root",
-    password= "1",
+    password= "123456",
     database="smartheadset",
     charset="utf8")
  
@@ -31,7 +31,7 @@ def InsertResource(course_id, duration, file_size, file_name, file_format, file_
     conn = pymysql.connect(
     host="localhost",
     user="root",
-    password= "1",
+    password= "123456",
     database="smartheadset",
     charset="utf8")
  
@@ -65,7 +65,7 @@ def InsertCourse(course_name,
     conn = pymysql.connect(
     host="localhost",
     user="root",
-    password= "1",
+    password= "123456",
     database="smartheadset",
     charset="utf8")
  
@@ -91,7 +91,7 @@ def GetCourseNumber():
     conn = pymysql.connect(
     host="localhost",
     user="root",
-    password= "1",
+    password= "123456",
     database="smartheadset",
     charset="utf8")
  
@@ -110,7 +110,7 @@ def GetResourceNumber():
     conn = pymysql.connect(
     host="localhost",
     user="root",
-    password= "1",
+    password= "123456",
     database="smartheadset",
     charset="utf8")
  

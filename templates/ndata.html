@@ -189,7 +189,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="example2" class="table table-bordered table-hover">
+              <table id="example2" class="display nowrap table table-bordered table-striped">
                 <thead>
                 <tr>
                 {% for column in columns %}
@@ -447,10 +447,12 @@
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': true,
-      'searching'   : false,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : true
+      'autoWidth'   : true,
+      'scrollY': 200, //表格页面的长度
+      'scrollX': true   //是否支持滚动
     })
   })
 </script>

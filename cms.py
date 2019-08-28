@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 #coding:utf8
+import daemon
 import os.path
 import tornado.httpserver
 import tornado.ioloop
@@ -14,7 +15,7 @@ import datetime
 from tornado.options import define, options
 define("port", default=9180, help="run on the given port", type=int)
 
-DNS="http://127.0.0.1:8080/"
+DNS="http://10.0.0.121:8080/"
 PATH="/home/rain/openresty/nginx/html/"
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -220,4 +221,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+        daemon.daemonize("/tmp/cms.pid")
+        main()

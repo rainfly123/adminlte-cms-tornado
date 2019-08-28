@@ -201,7 +201,11 @@
                 {% for row in rows %}
                  <tr>
                   {% for field in row %}
-                    <td>{{field}}</td>
+                    {% if type(field)== unicode and field.startswith("http") %}
+                        <td><a href="{{field}}">查看</a></td>
+                    {% else %}
+                       <td>{{field}}</td>
+                    {% end %}
                   {% end %}
                  </tr>
                 {% end %}

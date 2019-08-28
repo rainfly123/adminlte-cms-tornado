@@ -112,7 +112,13 @@ def checkPicName(course_name, filename, index):
 
 if __name__ =='__main__':
     if len(sys.argv) < 2:
+        print "   {0} [excelfile] [1/2]\n    excel \
+        file's full path\n    1 create course, 2 create all resource".format(sys.argv[0])
+         
         sys.exit(-1)
-    #Course(sys.argv[1])
-    Resourse(sys.argv[1])
+
+    if sys.argv[2] == "1":
+        Course(sys.argv[1])
+    elif sys.argv[2] == "2":
+        Resourse(sys.argv[1])
 

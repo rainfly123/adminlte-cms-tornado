@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 #coding:utf-8
+import sys;
+reload(sys);
+sys.setdefaultencoding("utf8")
 from qiniu import Auth
 from qiniu import put_file, etag
 import qiniu.config

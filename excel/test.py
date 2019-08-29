@@ -5,6 +5,7 @@ import sys
 import xlrd
 import datetime
 import utils
+import mysql
 import re
 
 
@@ -28,6 +29,8 @@ def Course(filename):
         course_count = csheet.nrows - 1
         course_name = sheet
         localfile = os.path.join(course_name, u"图片",u"介绍.png")
+        if os.access(localfile, os.R_OK) != True:
+            print u"!!!!没有课程封面:%s"%localfile
 
 def Resourse(filename):
     create_time = str(datetime.datetime.now()) 
@@ -58,10 +61,10 @@ def Resourse(filename):
                  file_md5 = utils.GetMd5(file_path)
                  file_size = utils.GetSize(file_path)
                  pic_path = checkPicName(sheet, mp3filename, x)
-                 if os.access(pic_path, os.R_OK) == True:
-                     print u"==============没有图片文件==%s==%s=%s====="%(sheet, file_name, pic_path)
+                 if pic_path == None:
+                     print u"!!!!!没有图片文件:《%s》-->(%s)=(%s)====="%(sheet, file_name, pic_path)
              else:
-                print u"==============没有资源文件==%s==%s=%d====="%(sheet, file_name, x)
+                print u"!!!!!没有资源文件:《%s》-->(%s)=%d====="%(sheet, file_name, x)
                 continue
 
 

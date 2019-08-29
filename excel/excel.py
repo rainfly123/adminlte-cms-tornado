@@ -29,7 +29,7 @@ def Course(filename):
         course_description =  csheet.cell_value(1, 5)
         course_count = csheet.nrows - 1
         course_name = sheet
-        localfile = os.path.join("upload", course_name, u"图片",u"介绍.png")
+        localfile = os.path.join(course_name, u"图片",u"介绍.png")
         image_url = qiniusdk.upload(localfile)
         if image_url != None:
             mysql.InsertCourse(course_name, course_category[:49], course_description, image_url, course_count)
@@ -54,7 +54,7 @@ def Resourse(filename):
              file_text = ""
              file_type = 1
 
-             localpath = os.path.join("upload", sheet, u"资源")  
+             localpath = os.path.join(sheet, u"资源")  
              check = u"%s.mp3"%(mp3filename)
              file_path = os.path.join(localpath, check)
              print file_path
@@ -77,11 +77,11 @@ def Resourse(filename):
                             file_text, file_type, file_md5, create_time, download_url, description,
                             image_url, play_param, upload_account_id)
 
-        #localfile = os.path.join("upload", filename, u"图片",u"介绍.png")
+        #localfile = os.path.join(filename, u"图片",u"介绍.png")
         #image_url = qiniusdk.upload(localfile)
 
 def checkPicName(course_name, filename, index):
-        localpath = os.path.join("upload", course_name, u"图片")  
+        localpath = os.path.join(course_name, u"图片")  
         check1 = u"描述_%d.png"%(index)
         file_path = os.path.join(localpath, check1)
         if os.access(file_path, os.R_OK) == True:

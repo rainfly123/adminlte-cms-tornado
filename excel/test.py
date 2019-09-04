@@ -3,10 +3,9 @@
 import os
 import sys
 import xlrd
-import mysql
-import qiniusdk
 import datetime
 import utils
+import mysql
 import re
 
 
@@ -30,9 +29,8 @@ def Course(filename):
         course_count = csheet.nrows - 1
         course_name = sheet
         localfile = os.path.join(course_name, u"图片",u"介绍.png")
-        image_url = qiniusdk.upload(localfile)
-        if image_url != None:
-            mysql.InsertCourse(course_name, course_category[:49], course_description, image_url, course_count)
+        if os.access(localfile, os.R_OK) != True:
+            print u"!!!!没有课程封面:%s"%localfile
 
 def Resourse(filename):
     create_time = str(datetime.datetime.now()) 
@@ -62,23 +60,13 @@ def Resourse(filename):
                  duration = utils.GetDuration(file_path)
                  file_md5 = utils.GetMd5(file_path)
                  file_size = utils.GetSize(file_path)
-                 #check picture, then upload to qiniu
                  pic_path = checkPicName(sheet, mp3filename, x)
-                 image_url = qiniusdk.upload(pic_path)
-                 #check mp3, then upload to qiniu
-                 download_url = qiniusdk.upload(file_path)
+                 if pic_path == None:
+                     print u"!!!!!没有图片文件:《%s》-->(%s)=(%s)====="%(sheet, file_name, pic_path)
              else:
-                print u"==============没有资源文件==%s==%s=%d====="%(sheet, file_name, x)
+                print u"!!!!!没有资源文件:《%s》-->(%s)=%d====="%(sheet, file_name, x)
                 continue
 
-             if len(file_name) > 0:
-                 file_name = re.escape(file_name)
-             mysql.InsertResource(course_id, duration, file_size, file_name, file_format, file_order,
-                            file_text, file_type, file_md5, create_time, download_url, description,
-                            image_url, play_param, upload_account_id)
-
-        #localfile = os.path.join(filename, u"图片",u"介绍.png")
-        #image_url = qiniusdk.upload(localfile)
 
 def checkPicName(course_name, filename, index):
         localpath = os.path.join(course_name, u"图片")  

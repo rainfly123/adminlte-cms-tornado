@@ -11,6 +11,7 @@ import mysql
 import utils 
 import uuid
 import datetime
+import qiniusdk
 
 from tornado.options import define, options
 define("port", default=9181, help="run on the given port", type=int)
@@ -52,8 +53,12 @@ class ninputHandler(BaseHandler):
             img_file = img_files[0]["body"] 
             ext = os.path.splitext(img_files[0]['filename'])[1]
             mylogo += ext
-            with open(os.path.join(PATH, mylogo), 'wb') as f:
+            logo_full_path = os.path.join(PATH, mylogo)
+            with open(logo_full_path, 'wb') as f:
                 f.write(img_file)
+
+            logo_url = qiniusdk.upload(logo_full_path)
+            os.remove(logo_full_path)
 
         mymp3 = str(uuid.uuid1())
         mp3_files = files.get("mp3")
@@ -62,13 +67,19 @@ class ninputHandler(BaseHandler):
             mp3_file = mp3_files[0]["body"] 
             ext = os.path.splitext(mp3_files[0]['filename'])[1]
             mymp3 += ext
-            with open(os.path.join(PATH, mymp3), 'wb') as f:
+            mp3_full_path = os.path.join(PATH, mymp3)
+            with open(mp3_full_path, 'wb') as f:
                 f.write(mp3_file)
+
             file_md5 = utils.GetMd5(mp3_file)
-            duration = utils.GetDuration(os.path.join(PATH, mymp3))
+            duration = utils.GetDuration(mp3_full_path)
             file_size = len(mp3_file)
-        image_url = os.path.join(DNS, mylogo)
-        download_url = os.path.join(DNS, mymp3)
+
+            mp3_url = qiniusdk.upload(mp3_full_path)
+            os.remove(mp3_full_path)
+
+        image_url = logo_url
+        download_url = mp3_url
 
         mysql.InsertResource(course_id, duration, file_size, file_name, file_format, file_order,
                             file_text, file_type, file_md5, create_time, download_url, description,
@@ -99,7 +110,8 @@ class minputHandler(BaseHandler):
             img_file = img_files[0]["body"] 
             ext = os.path.splitext(img_files[0]['filename'])[1]
             mylogo += ext
-            with open(os.path.join(PATH, mylogo), 'wb') as f:
+            logo_full_path = os.path.join(PATH, mylogo)
+            with open(logo_full_path, 'wb') as f:
                 f.write(img_file)
 
         """
@@ -113,7 +125,9 @@ class minputHandler(BaseHandler):
             with open(os.path.join(PATH, mymp3), 'wb') as f:
                 f.write(mp3_file)
         """
-        image_url = os.path.join(DNS, mylogo)
+        image_url = qiniusdk.upload(logo_full_path)
+        os.remove(logo_full_path)
+
         if free == 'on':
             course_free = 1
         else:

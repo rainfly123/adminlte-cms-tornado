@@ -9,7 +9,7 @@ import qiniu.config
 import uuid
 import base64
 import os
-URL = "http://resource.qctchina.top"
+URL = "https://resource.qctchina.top"
 access_key = 'pkTzM_Eu4vrIYJDuh4u5psLAWzycH7nozlWU2-Uz'
 secret_key = 'P6JLYU87Oxc8cDjL5SWL6Ajfg1Nonm6NH09c60TN'
 

@@ -42,7 +42,8 @@ def InsertCourse(course_name,
     password= "123456",
     database="smartheadset",
     charset="utf8")
- 
+    course_category = course_category[:100]
+    course_description =  course_description[:1000]
     create_time = str(datetime.datetime.now()) 
     cursor = conn.cursor() 
     sql = 'insert into sh_course (course_name, course_category, \

@@ -47,6 +47,7 @@ def Resourse(filename):
              if len(description) > 0:
                  description = re.escape(description)
              mp3filename = csheet.cell_value(x,3)
+             print mp3filename
              file_order = x 
              file_format = "mp3"
              play_param = ""

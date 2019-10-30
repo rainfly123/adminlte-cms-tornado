@@ -12,6 +12,7 @@ import utils
 import uuid
 import datetime
 import qiniusdk
+import tts
 
 from tornado.options import define, options
 define("port", default=9181, help="run on the given port", type=int)
@@ -213,6 +214,27 @@ class LoginHandler(BaseHandler):
         else:
             self.redirect("/login")
 
+class ttsHandler(BaseHandler):
+    def get(self):
+        text = self.get_argument("text")
+        gender = self.get_argument("gender")
+        self.set_header("Content-Type","audio/mpeg");
+        data = tts.GetTTS(gender, text)
+        self.write(data)
+
+class ttsurlHandler(BaseHandler):
+    def get(self):
+        text = self.get_argument("text")
+        gender = self.get_argument("gender")
+        self.set_header("Content-Type","audio/mpeg");
+        data = tts.GetTTS(gender, text)
+        mylogo = str(uuid.uuid1()) + ".mp3"
+        with open(mylogo, "wb") as f:
+            f.write(data)
+
+        self.write("http://120.76.190.105/" + mylogo)
+
+
 def main():
     tornado.options.parse_command_line()
     application = tornado.web.Application([
@@ -222,6 +244,8 @@ def main():
             (r"/login", LoginHandler),
             (r"/minput", minputHandler),
             (r"/ninput", ninputHandler),
+            (r"/tts", ttsHandler),
+            (r"/tts_url", ttsurlHandler),
         ],
         template_path = os.path.join(os.path.dirname(__file__), "templates"),
         static_path = os.path.join(os.path.dirname(__file__), "static"),

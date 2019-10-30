@@ -51,7 +51,8 @@ def Resourse(filename):
              upload_account_id = 1
              file_text = ""
              file_type = 1
-
+             if len(mp3filename) is 0:
+                 continue
              localpath = os.path.join(sheet, u"资源")  
              check = u"%s.mp3"%(mp3filename)
              file_path = os.path.join(localpath, check)

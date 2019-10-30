@@ -27,7 +27,12 @@ def Course(filename):
         # 1 row, 5 col  课程描述
         #print csheet.cell_value(1,5)
         course_description =  csheet.cell_value(1, 5)
-        course_count = csheet.nrows - 1
+        #course_count = csheet.nrows - 1
+        course_count = 0
+        for x in [i + 1 for i in xrange(csheet.nrows - 1)]:
+             mp3filename = csheet.cell_value(x,3)
+             if len(mp3filename) > 0:
+                course_count += 1
         course_name = sheet
         localfile = os.path.join(course_name, u"图片",u"介绍.png")
         image_url = qiniusdk.upload(localfile)

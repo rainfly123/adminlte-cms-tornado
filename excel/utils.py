@@ -22,7 +22,17 @@ def GetDuration(filepath):
     if filepath is not None:
         audio = mp3.Open(filepath)
         return int(audio.info.length)
+
+def GetBitrate(filepath):
+    if filepath is not None:
+        audio = mp3.Open(filepath)
+        return int(audio.info.bitrate)
         
+def GetSampleRate(filepath):
+    if filepath is not None:
+        audio = mp3.Open(filepath)
+        return int(audio.info.sample_rate)
+ 
 
 if __name__ == '__main__':
     import sys
@@ -33,6 +43,8 @@ if __name__ == '__main__':
     print GetDuration(sys.argv[1])
     print GetMd5(sys.argv[1])
     print GetSize(sys.argv[1])
+    print GetBitrate(sys.argv[1])/1000,"k"
+    print GetSampleRate(sys.argv[1])/1000,"k"
 
 
     

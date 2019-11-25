@@ -10,8 +10,8 @@ import os
 import hashlib
 
 URL = "https://cdncms.qctchina.top"
-access_key = 'pkTzM_Eu4vrIYJDuh4u5psLAWzycH7nozlWU2-Uz'
-secret_key = 'P6JLYU87Oxc8cDjL5SWL6Ajfg1Nonm6NH09c60TN'
+access_key = 'pkTu4vrIYJDuh4u5psLAWzycH7nozlWU2-Uz'
+secret_key = 'P6JOxc8cDjL5SWL6Ajfg1Nonm6NH09c60TN'
 
 q = Auth(access_key, secret_key)
 bucket_name = 'resource'

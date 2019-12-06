@@ -16,7 +16,7 @@ for root, dirs, files in os.walk(".", topdown=False):
             data = open(fullpath, 'rb').read()
             m.update(data)
             md5 = m.hexdigest()
-            cmd = "ffmpeg -i {0} -id3v2_version 3 -metadata artist='Qichen' -map_metadata -1 -ar 22050 -ab 64k ../md5/{1}.mp3".format(fullpath, md5))
+            cmd = "ffmpeg -i {0} -id3v2_version 3 -metadata artist='Qichen' -map_metadata -1 -ar 22050 -ab 64k ./md5/{1}.mp3".format(fullpath, md5))
             os.system(cmd)
         else:
             os.rename(fullpath, "../md5/{0}".format(fullpath))
